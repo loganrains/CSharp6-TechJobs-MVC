@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Web.Virtualization;
 using Microsoft.AspNetCore.Mvc;
 using TechJobsMVCAutograded6.Data;
 using TechJobsMVCAutograded6.Models;
@@ -41,9 +42,32 @@ public class ListController : Controller
         return View();
     }
 
-    // TODO #2 - Complete the Jobs action method
+    // TODONE #2 - Complete the Jobs action method
     public IActionResult Jobs(string column, string value)
     {
+        List<Job> jobs = new();
+
+        if (value == "View All")
+        {
+            jobs = JobData.FindAll();
+            ViewBag.title = "ALL JOBS";
+        }
+        else
+        {
+            jobs = JobData.FindByColumnAndValue(column, value);
+            
+            if (column == "positionType")
+            {
+                ViewBag.title = $"JOBS FOR POSITION TYPE: {value.ToUpper()}";
+            }
+            else
+            {
+                ViewBag.title = $"JOBS FOR {column.ToUpper()}: {value.ToUpper()}";
+            }
+        }
+        
+        ViewBag.Jobs = jobs;
+
         return View();
     }
 }
