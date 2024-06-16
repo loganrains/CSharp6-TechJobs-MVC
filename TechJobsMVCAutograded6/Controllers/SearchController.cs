@@ -17,6 +17,41 @@ public class SearchController : Controller
         return View();
     }
 
-    // TODO #3 - Create an action method to process a search request and render the updated search views.
+    // TODONE #3 - Create an action method to process a search request and render the updated search views.
+    // GET: /<controller>/
+    public IActionResult Results(string searchType, string searchTerm)
+    {
+        ViewBag.columns = ListController.ColumnChoices;
+    
+        List<Job> jobs = new();
+
+        if (searchTerm == "all" || searchTerm == "" || searchTerm == null)
+        {
+            jobs = JobData.FindAll();
+            ViewBag.title = "ALL JOBS";
+        }
+        else if (searchType.ToLower() == "all")
+        {
+            jobs = JobData.FindByValue(searchTerm);
+            ViewBag.title = $"ALL JOBS {searchTerm.ToUpper()}";
+        }
+        else
+        {
+            jobs = JobData.FindByColumnAndValue(searchType, searchTerm);
+            
+            if (searchType == "positionType")
+            {
+                ViewBag.title = $"JOBS FOR POSITION TYPE: {searchType.ToUpper()}";
+            }
+            else
+            {
+                ViewBag.title = $"JOBS FOR {searchType.ToUpper()}: {searchTerm.ToUpper()}";
+            }
+        }
+
+        ViewBag.Jobs = jobs;
+
+        return View();
+    }
 }
 

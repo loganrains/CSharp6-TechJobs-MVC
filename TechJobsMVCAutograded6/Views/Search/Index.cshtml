@@ -26,7 +26,29 @@
 
     <hr />
 
-    @* TODO #4 - Loop over the search results to display all job fields. *@
+    @* TODONE #4 - Loop over the search results to display all job fields. *@
+    @if (ViewBag.jobs == null)
+    {
+        <h1>Loading...</h1>
+    }
+    else
+    {
+        <table class="job-listing">
+            @foreach(var job in ViewBag.jobs)
+            {
+                <tr>
+                    <td>
+                        <p>ID: @job.Id</p>
+                        <p>Name: @job.Name</p>
+                        <p>Employer: @job.Employer</p>
+                        <p>Location: @job.Location</p>
+                        <p>Position Type: @job.PositionType</p>
+                        <p>Core Competency: @job.CoreCompetency</p>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
 
 
 
