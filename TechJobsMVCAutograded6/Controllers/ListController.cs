@@ -71,4 +71,3 @@ public class ListController : Controller
         return View();
     }
 }
-

@@ -20,9 +20,7 @@ public class SearchController : Controller
     // TODONE #3 - Create an action method to process a search request and render the updated search views.
     // GET: /<controller>/
     public IActionResult Results(string searchType, string searchTerm)
-    {
-        ViewBag.columns = ListController.ColumnChoices;
-    
+    {    
         List<Job> jobs = new();
 
         if (searchTerm == "all" || searchTerm == "" || searchTerm == null)
@@ -50,8 +48,9 @@ public class SearchController : Controller
         }
 
         ViewBag.Jobs = jobs;
+        ViewBag.columns = ListController.ColumnChoices;
 
-        return View();
+        return View("Index");
     }
 }
 
